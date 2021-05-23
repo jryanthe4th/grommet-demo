@@ -153,7 +153,8 @@ export default function Home() {
           <>
           <Head>
           <title>J&J Landscaping</title>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="manifest" href="/manifest.json" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
         </Head>
