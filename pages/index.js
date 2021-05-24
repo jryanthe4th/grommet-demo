@@ -103,41 +103,39 @@ const Responsive = ({
   areas,
   ...props
 }) => (
-  <ResponsiveContext.Consumer
-    style={{ width: '100%' }}
-  >
-        {size => {
-      // Take into consideration if not array is sent but a simple string
-      let columnsVal = columns;
-      if (columns) {
-        if (columns[size]) {
-          columnsVal = columns[size];
+  <ResponsiveContext.Consumer>
+    {size => {
+        let columnsVal = columns;
+        if (columns) {
+          if (columns[size]) {
+            columnsVal = columns[size];
+          }
         }
-      }
 
-      let rowsVal = rows;
-      if (rows) {
-        if (rows[size]) {
-          rowsVal = rows[size];
+        let rowsVal = rows;
+        if (rows) {
+          if (rows[size]) {
+            rowsVal = rows[size];
+          }
         }
+
+        let areasVal = areas;
+        if (areas && !Array.isArray(areas)) areasVal = areas[size];
+
+        return (
+          <Grid
+            {...props}
+            areas={!areasVal ? undefined : areasVal}
+            rows={!rowsVal ? size : rowsVal}
+            columns={!columnsVal ? size : columnsVal}
+            className='JR-GridBox'
+            style={{ height: '20%', widht: '100%', justify: 'center'}}
+          >
+            {children}
+          </Grid>
+        );
       }
-
-      // Also if areas is a simple array not an object of arrays for
-      // different sizes
-      let areasVal = areas;
-      if (areas && !Array.isArray(areas)) areasVal = areas[size];
-
-      return (
-        <Grid
-          {...props}
-          areas={!areasVal ? undefined : areasVal}
-          rows={!rowsVal ? size : rowsVal}
-          columns={!columnsVal ? size : columnsVal}
-        >
-          {children}
-        </Grid>
-      );
-    }}
+    }
   </ResponsiveContext.Consumer>
 );
 
@@ -153,10 +151,9 @@ export default function Home() {
           <>
           <Head>
           <title>J&J Landscaping</title>
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="manifest" href="/manifest.json" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
+          <link rel='shortcut icon' href='/favicon.ico' />
+          <link rel='preconnect' href='https://fonts.gstatic.com' />
+          <link href='https://fonts.googleapis.com/css2?family=Play&display=swap' rel='stylesheet' />
         </Head>
           <Box fill>
             <AppBar>
@@ -168,83 +165,56 @@ export default function Home() {
             </AppBar>
             <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
 
-              <Box flex align='center' style={{ lineHeight: 1 }}>
-                {/* <Box height="medium" width="large" overflow="hidden"> */}
-                <Box>
-                  <Carousel play={5000} style={{ minHeight: 100 }} fill>
-                    <Image fit="cover" src="/BackyardPics/IMG-8149.jpg" />
-                    <Image fit="cover" src="/BackyardPics/IMG-8153.jpg" />
-                    <Image fit="cover" src="/BackyardPics/IMG-8154.jpg" />
-                    <Image fit="cover" src="/BackyardPics/IMG-8157.jpg" />
+              <Box className='WhatIsThisBox' flex align='center' style={{ minHeight: '100vh' }}>
+                {/* <Box height='medium' width='large' overflow='hidden'> */}
+                <Box className='Carousel-Container' style={{ minHeight: 300 }}>
+                  <Carousel play={5000} fill>
+                    <Image fit='cover' src='/BackyardPics/IMG-8149.jpg' />
+                    <Image fit='cover' src='/BackyardPics/IMG-8153.jpg' />
+                    <Image fit='cover' src='/BackyardPics/IMG-8154.jpg' />
+                    <Image fit='cover' src='/BackyardPics/IMG-8157.jpg' />
                   </Carousel>
                 </Box>
-                <Box>
+
 
                   <Responsive
                     rows={rows}
                     columns={columns}
                     gap='small'
                     areas={fixedGridAreas}
-                    margin='medium'
+                    margin='small'
                   >
                     <Box
-                      gridArea="b1"
-                      background="neutral-2"
-                      justify="center"
-                      align="center"
+                      gridArea='b1'
+                      background='light-2'
+                      justify='center'
+                      align='center'
+                      className='box1'
                     >
-                      <strong>J&J has over 20 years of experience designing, building, and maintaning residential landscapes.</strong>
+                      <strong style={{ padding: '10px' }}>J&J has over 20 years of experience designing, building, and maintaning residential landscapes.</strong>
                     </Box>
                     <Box
-                      gridArea="b2"
-                      background="neutral-3"
-                      justify="center"
-                      align="center"
+                      gridArea='b2'
+                      background='light-2'
+                      justify='center'
+                      align='center'
+                      className='box2'
                     >
-                      <strong>We specialize in patios, pavers, concrete, irrigation systems, plants, trees, rocks, boulders,</strong>
-                      <strong>new lawns, firepits, landscape lighting, decorative landscaping rocks, and many other items.</strong>
+                      <strong style={{ padding: '10px' }}>
+                      We specialize in patios, pavers, concrete, irrigation systems, plants, trees, rocks, boulders,
+                      new lawns, firepits, landscape lighting, decorative landscaping rocks, and many other items.
+                      </strong>
                     </Box>
                     <Box
-                      gridArea="b3"
-                      background="neutral-4"
-                      justify="center"
-                      align="center"
+                      gridArea='b3'
+                      background='light-2'
+                      justify='center'
+                      align='center'
+                      className='box3'
                     >
-                      <strong>Call or text for free consult and estimate</strong>
+                      <strong style={{ padding: '10px' }}>Call or text for free consult and estimate</strong>
                     </Box>
                   </Responsive>
-
-                </Box>
-
-                  {/* <Grid
-                    fill
-                    rows={['auto', 'flex']}
-                    columns={['auto', 'auto', 'auto']}
-                    areas={[
-                      { name: 'box1', start: [0,0], end: [0,0] },
-                      { name: 'box2', start: [1,0], end: [1,0] },
-                      { name: 'box3', start: [2,0], end: [2,0] },
-                    ]}
-                  >
-                    <Box
-                      gridArea='box1'
-                      background='dark-2'
-                    >Box1</Box>
-                    <Box
-                      gridArea='box2'
-                      background='light-3'
-                    >Box2</Box>
-                    <Box
-                      gridArea='box3'
-                      background='dark-3'
-                    >Box3</Box>
-                  </Grid> */}
-                  {/* <TextContent>
-                  J&J has over 20 years of experience designing, building, and maintaning residential landscapes.<br/>
-                  We specialize in patios, pavers, concrete, irrigation systems, plants, trees, rocks, boulders,<br/>
-                  new lawns, firepits, landscape lighting, decorative landscaping rocks, and many other items.<br/>
-                  Call or text for free consult and estimate<br/>
-                </TextContent> */}
               </Box>
 
                 {(!showSidebar || size !== 'small') ? (
@@ -252,7 +222,7 @@ export default function Home() {
                     <Box
                       flex
                       width='medium'
-                      background='dark-3'
+                      background='light-2'
                       elevation='small'
                       align='center'
                       justify='center'
@@ -263,7 +233,7 @@ export default function Home() {
                 ) : (
                   <Layer>
                     <Box
-                      background='dark-3'
+                      background='light-2'
                       tag='header'
                       align='center'
                       justify='end'
@@ -276,7 +246,7 @@ export default function Home() {
                     </Box>
                     <Box
                       fill
-                      background='dark-3'
+                      background='light-2'
                       align='center'
                       justify='center'
                     >
